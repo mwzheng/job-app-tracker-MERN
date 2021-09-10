@@ -9,7 +9,7 @@ router
     .post(addJobApp)
 
 router
-    .route('/id')
+    .route('/:id')
     .delete(deleteJobApp)
     .put(updateJobApp)
 

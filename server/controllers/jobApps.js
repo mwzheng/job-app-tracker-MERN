@@ -6,14 +6,12 @@ exports.getJobApps = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            mssg: 'Retreiving all job apps',
             count: allJobApps.length,
             data: allJobApps,
         });
     } catch {
         return res.status(500).json({
             success: false,
-            mssg: 'Failed to retrieve all job apps',
             error: "Server error"
         });
     }
@@ -25,7 +23,6 @@ exports.addJobApp = async (req, res) => {
 
         return res.status(201).json({
             success: true,
-            mssg: 'Added new job app',
             newJobApp: newJobApp
         });
     } catch (err) {
@@ -34,9 +31,7 @@ exports.addJobApp = async (req, res) => {
 
             return res.status(400).json({
                 success: false,
-                mssg: 'Failed to add new job app',
-                type: 'Bad Request',
-                error: messages,
+                errors: messages,
             });
         } else {
             return res.status(500).json({
@@ -47,10 +42,30 @@ exports.addJobApp = async (req, res) => {
     }
 }
 
-exports.updateJobApp = async (req, res) => {
+exports.deleteJobApp = async (req, res) => {
+    try {
+        const jobAppId = req.params.id;
+        const removedJobApp = await JobApp.findByIdAndDelete(jobAppId);
 
+        if (!removedJobApp) {
+            return res.status(404).json({
+                success: false,
+                error: `Job app with id ${jobAppId} not found`,
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            jobRemoved: removedJobApp,
+        });
+    } catch {
+        return res.status(500).json({
+            success: false,
+            error: 'Server error',
+        });
+    }
 }
 
-exports.deleteJobApp = async (req, res) => {
+exports.updateJobApp = async (req, res) => {
 
 }
