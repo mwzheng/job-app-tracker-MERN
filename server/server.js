@@ -1,11 +1,13 @@
 const express = require('express');
+const connectDb = require('./db');
 
-const portNumb = 5000;
+const dotenv = require('dotenv');
+dotenv.config();
+
+connectDb();
 
 const app = express();
 
-app.use(express.json());
-
-app.listen(portNumb, () => {
-    console.log(`Starting job-app-tracker server, listening on port: ${portNumb}`);
+app.listen(process.env.PORT_NUMBER, () => {
+    console.log(`Starting job-app-tracker server, listening on port: ${process.env.PORT_NUMBER}`);
 })
