@@ -1,0 +1,270 @@
+body {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #7db7e7;
+    margin: 20px;
+}
+
+table {
+    border-spacing: 3px;
+    margin: 10px 0px;
+    width: 70vw;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: ridge;
+    border-width: 5px;
+    background-color: whitesmoke;
+}
+
+td, tr {
+    border-style: solid;
+    margin: 1px 5px;
+    padding: 1px 5px;
+    text-align: center;
+}
+
+td {
+    font-size: 1.1vw;
+}
+
+h3 {
+    text-align: center;
+    margin: 5px;
+}
+
+th {
+    border-style:solid;
+    border-width: 3px;
+    font-size: 1.5vw;
+    padding: 0px 6px;
+}
+
+input:focus, button:focus {
+    outline: none;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+input {
+    margin: 0px 1vw 0px .1vw;
+    width: 1vw;
+    height: 1.25vw;
+}
+
+button, input, label {
+    font-size: 1vw;
+}
+
+label {
+    font-weight: bold;
+    font-size: 1.2vw;
+}
+
+button:hover:enabled {
+    cursor: pointer;
+}
+
+i, p {
+    margin: 5px;
+}
+
+.edit {
+    margin: 0%;
+    padding: 0%;
+}
+
+.infoTh, .editTh {
+    padding: 0%;
+}
+
+#infoBttn {
+    background-color: #cee1f1;
+}
+
+.inputDiv {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items:baseline;
+    margin:auto;
+}
+
+#companyName, #jobLocation {
+    width: 6vw;
+}
+
+#appLink {
+    width: 5vw
+}
+
+.status, .link {
+    padding: 0%;
+}
+
+.progress {
+    padding: 0%;
+}
+
+#jobStats {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin: 10px 20px;
+}
+
+#statsContainer {
+    border-style: ridge;
+    margin: 0px 0px 20px 0px;
+    border-radius: 15px;
+    font-size: 1.2vw;
+    background-color: #5ca6e2;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.statusButton, .jobLinkButton, .deleteButton, .progressButton, .editBttn, #infoBttn {
+    width: 100%;
+    height: 2vw;
+}
+
+#addJobButton {
+    height: 1.5vw;
+    width: 3.4vw;
+    font-size: 1vw;
+    overflow: hidden;
+}
+
+.jobLinkButton:hover, .progressButton:hover:enabled {
+    background-color: #9eccf1;
+}
+
+.delete {
+    width: .2vw;
+    transition: ease-in-out .5s;
+    padding: 0px;
+}
+
+.deleteButton {
+    transition: ease-in-out .5s;
+}
+
+.deleteButton:hover {
+    background-color: rgb(236, 174, 186);
+}
+
+.jobLinkButton, .progressButton {
+    transition: ease-in-out .5s;
+}
+
+.statusButton {
+    padding: 0px 0px;
+    transition: ease-in-out .3s;
+}
+
+.statusButton:hover {
+    color: #168cec;
+}
+
+.applied {
+    background-color: rgb(178, 238, 178);
+}
+
+.rejected {
+    background-color: rgb(241, 177, 177);
+}
+
+.unknown {
+    background-color: rgb(231, 222, 168);
+}
+
+#resetContainer {
+    display: flex;
+}
+
+#resetButton {
+    margin: auto;
+    transition: ease-in-out .3s;
+    background-color: rgb(246, 174, 174);
+    font-weight: bold;
+    font-size: 1.45vw;
+    border-radius: 10px;
+}
+
+#resetButton:hover {
+    background-color: rgb(248, 147, 147);
+}
+
+.footer {
+    text-align: center;
+    margin: 2% auto auto auto;
+    font-size: 1.25vw;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.modalContent {
+    background-color: #8bbde6;
+    padding: .5vw;
+    width: 75vw;
+    border-radius: 10px;
+    top: -50;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.editModalContent {
+    width: 50vw;
+}
+
+.modalHeader {
+    padding: 0 0 .5vw 0;
+}
+
+.modalTitle {
+    font-size: 1.5vw;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.closeModalBttn {
+    float: right;
+    margin: 2px 2px 0 0;
+}
+
+.modalBody {
+    margin: 1vw 0 1vw 0;
+}
+
+#introDiv, #directions {
+    text-align: left;
+    margin: .5vw 0 .5vw 0;
+    font-size: 1.25vw;
+}
+
+.sectionHeader {
+    font-size: 1.5vw;
+    font-weight: bold;
+    margin-left: 5px;
+    text-align: center;
+}
+
+.appData, .updateAppForm {
+    font-size: 1.5vw;
+    margin: 5px 0 10px 0;
+}
+
+.updateAppInputBox {
+    width: 6vw;
+}
+
