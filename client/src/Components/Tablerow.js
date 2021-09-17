@@ -1,38 +1,37 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 // Component creates an individual row in the table for a single job application
-const Tablerow = ({ jobs, appData, setJobs, setShowUpdateModal, setJobAppToUpdate }) => {
-    // Default Val for progress = 'Waiting' and for status = 'Applied'
-    const [progress, setProgress] = useState(!appData.progress ? 'Waiting' : appData.progress);
-    const [status, setStatus] = useState(!appData.status ? 'Applied' : appData.status)
+const Tablerow = ({ jobs, appData, number, setJobs, setShowUpdateModal, setJobAppToUpdate }) => {
+    const [progress, setProgress] = useState(appData.progress);
+    const [status, setStatus] = useState(appData.status)
     const [disableProgress, setDisableProgress] = useState(status === 'Rejected');
-    let { number, name, date, location, link } = appData;
-    let jobAppIndex = number - 1; // Index of job App in jobs array
-    let jobList = JSON.parse(jobs);
+    let { _id, name, date, location, link } = appData;
 
     // Opens job application link in a new tab
     const openLink = (jobLink) => {
         window.open(jobLink, '_blank');
     }
 
-    const changeProgress = () => {
+    const changeProgress = async () => {
         let newProgress = (progress === 'In Progress') ? 'Waiting' : 'In Progress';
+
+        const config = {
+            'Content=Type': 'application.json'
+        }
+
+        await axios.patch(`api/v1/jobApps/${_id}`, { progress: newProgress }, config);
         setProgress(newProgress);
-        updateJobField('progress', newProgress);
     }
 
-    const changeStatus = () => {
+    const changeStatus = async () => {
         setDisableProgress(status === 'Unknown');
         let newStatus = getNextStatus();
+        const config = {
+            'Content=Type': 'application.json'
+        }
+        await axios.patch(`api/v1/jobApps/${_id}`, { status: newStatus }, config);
         setStatus(newStatus);
-        updateJobField('status', newStatus);
-    }
-
-    const updateJobField = (key, newValue) => {
-        let job = jobList[jobAppIndex];
-        jobList[jobAppIndex] = job;
-        job[key] = newValue;
-        updateJobList(jobList);
     }
 
     const getNextStatus = () => {
@@ -45,21 +44,17 @@ const Tablerow = ({ jobs, appData, setJobs, setShowUpdateModal, setJobAppToUpdat
         }
     }
 
-    const deleteJobApp = (number) => {
+    const deleteJobApp = async () => {
         if (!deleteConfirmed()) return;
-        let updatedJobList = jobList.filter(aJobApp => aJobApp.number !== number);
-        updatedJobList = reIndexApps(updatedJobList);
-        updateJobList(updatedJobList);
-    }
+        let updatedJobList = jobs.filter(aJobApp => aJobApp._id !== _id);
 
-    const reIndexApps = (appList) => {
-        let appNumber = 1;
+        const config = {
+            'Content=Type': 'application.json'
+        }
 
-        return appList.map(aJobApp => {
-            aJobApp.number = appNumber;
-            appNumber++;
-            return aJobApp;
-        })
+        await axios.delete(`api/v1/jobApps/${_id}`, config);
+
+        setJobs(updatedJobList);
     }
 
     const deleteConfirmed = () => {
@@ -67,13 +62,6 @@ const Tablerow = ({ jobs, appData, setJobs, setShowUpdateModal, setJobAppToUpdat
             `\nApplication #: ${number}\nCompany Name: ${name}\nLocation: ${location}`;
 
         return window.confirm(message);
-    }
-
-    // Update job list state & localstorage data
-    const updateJobList = (updatedList) => {
-        let newJobList = JSON.stringify(updatedList);
-        setJobs(newJobList);
-        localStorage.setItem('jobAppList', newJobList);
     }
 
     const editJobApp = () => {
@@ -111,7 +99,7 @@ const Tablerow = ({ jobs, appData, setJobs, setShowUpdateModal, setJobAppToUpdat
             <button className={`statusButton ${status.toLowerCase()}`} onClick={e => changeStatus()}>{status}</button>
         </td>
         <td className='delete'>
-            <button className='deleteButton' onClick={e => deleteJobApp(number)}>
+            <button className='deleteButton' onClick={e => deleteJobApp()}>
                 <i className='fa fa-trash' aria-hidden='true'></i>
             </button>
         </td>

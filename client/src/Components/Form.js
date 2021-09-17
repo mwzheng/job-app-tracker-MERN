@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { titleCase, capitalizeState } from '../Utils';
 
@@ -6,11 +7,16 @@ const Form = ({ jobs, setJobs }) => {
     const [jobName, setJobName] = useState("");
     const [jobLocation, setJobLocation] = useState("");
     const [jobLink, setJobLink] = useState("");
-    const jobList = JSON.parse(jobs);
 
-    const addNewJobApp = () => {
+    const addNewJobApp = async () => {
         if (isBadInput()) return;
         let newJobData = createNewJobApp();
+
+        const config = {
+            'Content=Type': 'application.json'
+        }
+
+        await axios.post('api/v1/jobApps', newJobData, config);
         updateJobList(newJobData);
         clearInputValues();
     }
@@ -20,14 +26,12 @@ const Form = ({ jobs, setJobs }) => {
     }
 
     const createNewJobApp = () => {
-        let newAppNumb = jobList.length + 1;
         let name = titleCase(jobName);
         let dateToday = new Date().toLocaleDateString();
         let location = capitalizeState(titleCase(jobLocation));
         let link = jobLink.trim();
 
         const newJobApp = {
-            "number": newAppNumb,
             "name": name,
             "date": dateToday,
             "location": location,
@@ -40,10 +44,8 @@ const Form = ({ jobs, setJobs }) => {
     }
 
     const updateJobList = (newJobData) => {
-        jobList.push(newJobData);
-        let newJobList = JSON.stringify(jobList);
-        setJobs(newJobList);
-        localStorage.setItem('jobAppList', newJobList);
+        jobs.push(newJobData);
+        setJobs(jobs);
     }
 
     const clearInputValues = () => {

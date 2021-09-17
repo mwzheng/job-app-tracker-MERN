@@ -1,14 +1,15 @@
+import axios from 'axios';
 import React from 'react';
 import Tablerow from './Tablerow';
 
 // Component to make and display the entire table
 const Table = ({ jobs, setJobs, setJobAppToUpdate, setShowInfoModal, setShowUpdateModal }) => {
-    const jobList = JSON.parse(jobs);
-
     // Populates the table with data on job apps
     const makeTable = () => {
-        return jobList.map(appData => {
-            return <Tablerow key={Math.random()} jobs={jobs} setJobs={setJobs} appData={appData}
+        let appNumb = 1;
+
+        return jobs.map(appData => {
+            return <Tablerow key={appData['_id']} jobs={jobs} number={appNumb++} setJobs={setJobs} appData={appData}
                 setShowUpdateModal={setShowUpdateModal} setJobAppToUpdate={setJobAppToUpdate} />;
         });
     }
