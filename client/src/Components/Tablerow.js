@@ -34,7 +34,6 @@ const Tablerow = ({ jobs, appData, setUpdated, number, setJobs, setShowUpdateMod
         await axios.patch(`api/v1/jobApps/${_id}`, { status: newStatus }, config);
         setStatus(newStatus);
         setUpdated(true);
-
     }
 
     const getNextStatus = () => {
@@ -70,7 +69,7 @@ const Tablerow = ({ jobs, appData, setUpdated, number, setJobs, setShowUpdateMod
 
     const editJobApp = () => {
         setShowUpdateModal(true);
-        setJobAppToUpdate(number - 1)
+        setJobAppToUpdate(number - 1);
     }
 
     return <tr key={number}>

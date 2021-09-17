@@ -37,8 +37,8 @@ function App() {
       <Reset jobs={jobs} setUpdated={setUpdated} />
       <Footer />
       <InfoModal showInfoModal={showInfoModal} setShowInfoModal={setShowInfoModal} />
-      {/* <UpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal}
-        jobAppToUpdate={jobAppToUpdate} jobs={jobs} setJobs={setJobs} /> */}
+      <UpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal}
+        jobAppToUpdate={jobAppToUpdate} jobs={jobs} setJobs={setJobs} setUpdated={setUpdated} />
     </div>
   );
 }

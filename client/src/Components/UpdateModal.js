@@ -1,30 +1,44 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { titleCase, capitalizeState } from '../Utils';
 
-const UpdateModal = ({ setShowUpdateModal, showUpdateModal, jobAppToUpdate, jobs, setJobs }) => {
+const UpdateModal = ({ setShowUpdateModal, showUpdateModal, jobAppToUpdate, jobs, setUpdated }) => {
     const [newJobName, setnewJobName] = useState('');
     const [newJobLocation, setnewJobLocation] = useState('');
     const [newJobLink, setnewJobLink] = useState('');
 
     if (!showUpdateModal) return null;
 
-    const lst = JSON.parse(jobs);
-    const { name, link, location } = lst[jobAppToUpdate];
-    const jobAppNumb = jobAppToUpdate + 1;
+    const { _id, name, link, location } = jobs[jobAppToUpdate];
 
-    const updateJobApp = () => {
-        if (newJobName !== '')
-            lst[jobAppToUpdate]['name'] = titleCase(newJobName);
+    const updateApp = async () => {
+        const config = {
+            'Content=Type': 'application.json'
+        }
 
-        if (newJobLocation !== '')
-            lst[jobAppToUpdate]['location'] = capitalizeState(titleCase(newJobLocation));
-
-        if (newJobLink !== '')
-            lst[jobAppToUpdate]['link'] = newJobLink.trim();
-
-        updateJobList(lst);
+        let newData = updateData();
+        await axios.patch(`api/v1/jobApps/${_id}`, newData, config);
+        setUpdated(true);
         setShowUpdateModal(false);
         resetInputStates();
+    }
+
+    const updateData = () => {
+        let updated = {};
+
+        if (newJobName !== '') {
+            updated = { ...updated, "name": titleCase(newJobName) };
+        }
+
+        if (newJobLocation !== '') {
+            updated = { ...updated, location: capitalizeState(titleCase(newJobLocation)) };
+        }
+
+        if (newJobLink !== '') {
+            updated = { ...updated, link: newJobLink.trim() }
+        }
+
+        return updated;
     }
 
     const resetInputStates = () => {
@@ -33,16 +47,10 @@ const UpdateModal = ({ setShowUpdateModal, showUpdateModal, jobAppToUpdate, jobs
         setnewJobLink('');
     }
 
-    const updateJobList = (updatedList) => {
-        let newJobList = JSON.stringify(updatedList);
-        setJobs(newJobList);
-        localStorage.setItem('jobAppList', newJobList);
-    }
-
     return <div className='modal'>
         <div className='editModalContent modalContent'>
             <div className='modalHeader'>
-                <span className='modalTitle'>Edit Job Application #{jobAppNumb}</span>
+                <span className='modalTitle'>Edit Job Application #{jobAppToUpdate}</span>
                 <button className='closeModalBttn' onClick={e => setShowUpdateModal(false)}>X</button>
             </div>
             <div className='modalBody'>
@@ -66,7 +74,7 @@ const UpdateModal = ({ setShowUpdateModal, showUpdateModal, jobAppToUpdate, jobs
                             onChange={e => setnewJobLink(e.target.value)}></input>
                     </span>
                 </div>
-                <button onClick={updateJobApp}>Update Job</button>
+                <button onClick={updateApp}>Update Job</button>
             </div>
         </div>
     </div>;
