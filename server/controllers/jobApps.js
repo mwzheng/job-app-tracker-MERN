@@ -8,6 +8,9 @@ const errorStatus = (res, statusCode, errMsg) => {
     });
 }
 
+// Method: GET
+// Route: /api/v1/jobApps
+// Description: Returns all current job apps stored
 exports.getJobApps = async (req, res) => {
     try {
         const allJobApps = await JobApp.find();
@@ -15,13 +18,16 @@ exports.getJobApps = async (req, res) => {
         return res.status(200).json({
             success: true,
             count: allJobApps.length,
-            data: allJobApps,
+            jobApps: allJobApps,
         });
     } catch {
         return errorStatus(res, 500, "Server error");
     }
 }
 
+// Method: POST
+// Route: /api/v1/jobApps
+// Description: Adds a new job app
 exports.addJobApp = async (req, res) => {
     try {
         const newJobApp = await JobApp.create(req.body);
@@ -40,6 +46,9 @@ exports.addJobApp = async (req, res) => {
     }
 }
 
+// Method: DELETE
+// Route: /api/v1/jobApps/:id
+// Description: Removes job app with given id
 exports.deleteJobApp = async (req, res) => {
     try {
         const jobAppId = req.params.id;
@@ -60,6 +69,9 @@ exports.deleteJobApp = async (req, res) => {
     }
 }
 
+// Method: PATCH
+// Route: /api/v1/jobApps/:id
+// Description: Updates job app with given id
 exports.updateJobApp = async (req, res) => {
     try {
         const updatedJobApp = await JobApp.findByIdAndUpdate(req.params.id, { $set: req.body },
