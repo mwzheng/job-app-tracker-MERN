@@ -1,0 +1,40 @@
+# To run the request, you must have the "REST Clinet" plugin installed on VSCode
+
+# Retrieve all current job apps
+GET http://localhost:5000/api/v1/jobApps 
+
+###
+
+# Adds a new job app
+POST http://localhost:5000/api/v1/jobApps 
+Content-Type: application/json
+
+{
+    "date": "5/24/21",
+    "name": "Color",
+    "location": "Baltimore, MD",
+    "link": "https://github.com",
+    "progress": "Waiting",
+    "status": "Applied"
+}
+
+###
+
+# Updates an old job app with the given id
+# NOTE: Must replace id to job app's id that you want to update
+PATCH http://localhost:5000/api/v1/jobApps/id
+Content-Type: application/json
+
+{
+    "location": "Washington, DC",
+    "progress": "In Progress",
+    "link": "https://youtube.com",
+    "name": "OneMain",
+    "status": "Rejected"
+}
+
+###
+
+# Deletes the job app with the given id
+# NOTE: Must replace id with job app's id you want to delete
+DELETE http://localhost:5000/api/v1/jobApps/id
