@@ -4,7 +4,6 @@ import { Pie, Line } from 'react-chartjs-2';
 const StatsModal = ({ allStats, jobs, showStatsModal, setShowStatsModal }) => {
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-    const jobList = JSON.parse(jobs);
     const lineInfo = {};
 
     const countStatuses = () => {
@@ -12,8 +11,8 @@ const StatsModal = ({ allStats, jobs, showStatsModal, setShowStatsModal }) => {
         let unknown = 0;
         let rejected = 0;
 
-        for (let i = 0; i < jobList.length; i++) {
-            let { status } = jobList[i];
+        for (let i = 0; i < jobs.length; i++) {
+            let { status } = jobs[i];
 
             if (status === 'Rejected') {
                 rejected++;
@@ -29,7 +28,7 @@ const StatsModal = ({ allStats, jobs, showStatsModal, setShowStatsModal }) => {
 
     // Returns array with job app month & year (Ex: ['Jan 21', 'Feb 21'])
     const getAppDates = () => {
-        return jobList.map(aJob => {
+        return jobs.map(aJob => {
             let { date } = aJob; // Date: MM/DD/YY
             let appYr = date.substr(-2);
             date = new Date(date);

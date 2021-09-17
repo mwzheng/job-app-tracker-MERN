@@ -1,11 +1,19 @@
+import axios from 'axios';
 import React from 'react';
 
 // Component used to delete all data information
-const Reset = ({ setJobs }) => {
+const Reset = ({ jobs, setUpdated }) => {
     const resetJobAppList = () => {
         if (window.confirm("Are you sure you want to reset table?\nThis CANNOT be undone!")) {
-            localStorage.removeItem('jobAppList');
-            setJobs('[]');
+            jobs.forEach(jobApp => {
+                const config = {
+                    'Content=Type': 'application.json'
+                }
+
+                axios.delete(`api/v1/jobApps/${jobApp._id}`, config);
+            })
+
+            setUpdated(true);
         }
     }
 

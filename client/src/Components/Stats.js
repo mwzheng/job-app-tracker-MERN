@@ -17,17 +17,24 @@ const Stats = ({ jobs }) => {
     const [jobRejectionPercentage, setJobRejectionPercentage] = useState(0);
     const [showStatsModal, setShowStatsModal] = useState(false);
     let allStats = {};
-    const jobAppList = JSON.parse(jobs);
 
     const calcJobStats = () => {
-        if (jobAppList.length === 0) {
+        if (jobs.length === 0) {
             setStats(0, 0, 0, 0, 0, 0);
             return;
         }
 
-        let numbOfApplications = jobAppList.length;
-        let daysOfJobSearching = calcDaysJobSearching();
-        let numbOfRejections = jobAppList.filter(anApp => anApp.status === 'Rejected').length;
+        let daysOfJobSearching = 0;
+
+        if (jobs.length !== 0) {
+            let dateToday = new Date();
+            let earliestAppDate = new Date(jobs[0]["date"]);
+            daysOfJobSearching = Math.floor((dateToday - earliestAppDate) / (1000 * 60 * 60 * 24)) + 1;
+        }
+
+        // populateAllStatsData();
+        let numbOfApplications = jobs.length;
+        let numbOfRejections = jobs.filter(anApp => anApp.status === 'Rejected').length;
         let rejectionPercentage = (((numbOfRejections) / numbOfApplications) * 100).toFixed(2);
         let waitingApps = numbOfApplications - numbOfRejections;
         let daysPerApp = (daysOfJobSearching / numbOfApplications).toFixed(2);
@@ -54,20 +61,8 @@ const Stats = ({ jobs }) => {
         setJobRejectionPercentage(rejectionPercentage);
     }
 
-    const calcDaysJobSearching = () => {
-        let daysOfJobSearching = 0;
-
-        if (jobAppList.length !== 0) {
-            let dateToday = new Date();
-            let earliestAppDate = new Date(jobAppList[0]["date"]);
-            daysOfJobSearching = Math.floor((dateToday - earliestAppDate) / (1000 * 60 * 60 * 24)) + 1;
-        }
-
-        return daysOfJobSearching;
-    }
-
     populateAllStatsData();
-    useEffect(calcJobStats);
+    useEffect(calcJobStats, [jobs]);
 
     return <div id='statsContainer'>
         <StatsModal jobs={jobs} allStats={allStats} showStatsModal={showStatsModal} setShowStatsModal={setShowStatsModal} />

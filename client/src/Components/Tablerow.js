@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 // Component creates an individual row in the table for a single job application
-const Tablerow = ({ jobs, appData, number, setJobs, setShowUpdateModal, setJobAppToUpdate }) => {
+const Tablerow = ({ jobs, appData, setUpdated, number, setJobs, setShowUpdateModal, setJobAppToUpdate }) => {
     const [progress, setProgress] = useState(appData.progress);
     const [status, setStatus] = useState(appData.status)
     const [disableProgress, setDisableProgress] = useState(status === 'Rejected');
@@ -22,6 +22,7 @@ const Tablerow = ({ jobs, appData, number, setJobs, setShowUpdateModal, setJobAp
 
         await axios.patch(`api/v1/jobApps/${_id}`, { progress: newProgress }, config);
         setProgress(newProgress);
+        setUpdated(true);
     }
 
     const changeStatus = async () => {
@@ -32,6 +33,8 @@ const Tablerow = ({ jobs, appData, number, setJobs, setShowUpdateModal, setJobAp
         }
         await axios.patch(`api/v1/jobApps/${_id}`, { status: newStatus }, config);
         setStatus(newStatus);
+        setUpdated(true);
+
     }
 
     const getNextStatus = () => {
@@ -55,6 +58,7 @@ const Tablerow = ({ jobs, appData, number, setJobs, setShowUpdateModal, setJobAp
         await axios.delete(`api/v1/jobApps/${_id}`, config);
 
         setJobs(updatedJobList);
+        setUpdated(true);
     }
 
     const deleteConfirmed = () => {

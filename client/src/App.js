@@ -7,7 +7,6 @@ import Reset from './Components/Reset';
 import Footer from './Components/Footer';
 import InfoModal from './Components/InfoModal';
 import UpdateModal from './Components/UpdateModal';
-import { getJobApps } from './request';
 import axios from 'axios';
 
 function App() {
@@ -15,6 +14,7 @@ function App() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [jobAppToUpdate, setJobAppToUpdate] = useState(0);
+  const [updated, setUpdated] = useState(false);
 
   const fetchJobApps = () => {
     axios.get('/api/v1/jobApps')
@@ -22,20 +22,22 @@ function App() {
         const allApps = res.data.jobApps;
         setJobs(allApps);
       })
+
+    setUpdated(false);
   }
 
-  useEffect(fetchJobApps, [])
+  useEffect(fetchJobApps, [updated])
 
   return (
     <div className="App">
-      {/* <Stats jobs={jobs} /> */}
-      <Form jobs={jobs} setJobs={setJobs} />
-      <Table jobs={jobs} setJobs={setJobs} setJobAppToUpdate={setJobAppToUpdate}
+      <Stats jobs={jobs} setShowUpdateModal={setShowUpdateModal} />
+      <Form jobs={jobs} setJobs={setJobs} setUpdated={setUpdated} />
+      <Table jobs={jobs} setJobs={setJobs} setUpdated={setUpdated} setJobAppToUpdate={setJobAppToUpdate}
         setShowInfoModal={setShowInfoModal} setShowUpdateModal={setShowUpdateModal} />
-      {/* <Reset setJobs={setJobs} /> */}
+      <Reset jobs={jobs} setUpdated={setUpdated} />
       <Footer />
-      {/* <InfoModal showInfoModal={showInfoModal} setShowInfoModal={setShowInfoModal} />
-      <UpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal}
+      <InfoModal showInfoModal={showInfoModal} setShowInfoModal={setShowInfoModal} />
+      {/* <UpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal}
         jobAppToUpdate={jobAppToUpdate} jobs={jobs} setJobs={setJobs} /> */}
     </div>
   );

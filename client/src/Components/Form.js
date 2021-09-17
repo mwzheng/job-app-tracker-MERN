@@ -3,21 +3,23 @@ import React, { useState } from 'react';
 import { titleCase, capitalizeState } from '../Utils';
 
 // Component used for form to input new data into the table 
-const Form = ({ jobs, setJobs }) => {
+const Form = ({ jobs, setJobs, setUpdated }) => {
     const [jobName, setJobName] = useState("");
     const [jobLocation, setJobLocation] = useState("");
     const [jobLink, setJobLink] = useState("");
 
     const addNewJobApp = async () => {
         if (isBadInput()) return;
+
         let newJobData = createNewJobApp();
 
         const config = {
             'Content=Type': 'application.json'
         }
 
-        await axios.post('api/v1/jobApps', newJobData, config);
-        updateJobList(newJobData);
+        let res = await axios.post('api/v1/jobApps', newJobData, config);
+        updateJobList(res.data.newJobApp);
+        setUpdated(true);
         clearInputValues();
     }
 
@@ -44,8 +46,9 @@ const Form = ({ jobs, setJobs }) => {
     }
 
     const updateJobList = (newJobData) => {
-        jobs.push(newJobData);
-        setJobs(jobs);
+        const newJobList = jobs;
+        newJobList.push(newJobData);
+        setJobs(newJobList);
     }
 
     const clearInputValues = () => {
