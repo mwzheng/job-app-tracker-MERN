@@ -11,6 +11,6 @@ router
 router
     .route('/:id')
     .delete(deleteJobApp)
-    .put(updateJobApp)
+    .patch(updateJobApp)
 
 module.exports = router;
