@@ -8,6 +8,16 @@ This is my attempt at redoing my [job app tracker](https://github.com/mwzheng/jo
 
 The project is made using the MERN stack (MongoDB, Express.js, React.js, Node.js)
 
+### Functionality:
+1. Add a job application to table
+2. Open the job application in new tab
+3. Check and change your progress or status for a job application
+4. Delete a job application from table
+5. Check your application Stats
+6. Edit a job app's name, location or link
+7. Visualize your progress over time with a graph
+8. Reset table data
+
 ### TODO:
 In server directory, create a .env file and add your Mongodb url & port number (See sample.env for an example)
 
