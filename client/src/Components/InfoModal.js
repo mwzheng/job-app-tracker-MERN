@@ -15,7 +15,7 @@ const InfoModal = ({ showInfoModal, setShowInfoModal }) => {
                         If you found this site, then it probably means you are currently
                         job hunting. This is a simple web app that I created to help keep track of your job applications,
                         whether you are searching for your first or next job. At the top of the page, there are stats based on the data
-                        you have entered into the tracker. Data entered will only be stored locally in your current browser.
+                        you have entered into the tracker.
                     </p>
                     <hr />
                     <div className='sectionHeader'>Stats</div>
@@ -40,17 +40,13 @@ const InfoModal = ({ showInfoModal, setShowInfoModal }) => {
                         <br />
                         - To update progress/status of an app, click on the job app's respective progress/status button.
                         <br />
-                        - To edit a job app, click on the job's edit icon. You can edit the job name, location or link.
+                        - To edit a job app, click on the job's edit icon. You can edit the job app's name, location or link.
                         <br />
                         - Note: Use link directly copied from browser (Link must include protocol: http, https, etc.).
                         <br />
                         - Note: Marking a job's status as "Rejected" will disable the job's progress button.
                     </p>
                 </div>
-            </div>
-            <div className='modalFooter'>
-                <i>IMPORTANT: Job data entered into this app are stored in localStorage.
-                    DO NOT CLEAR BROWSER HISTORY OR DATA WILL BE LOST.</i>
             </div>
         </div>
     </div> : null;
