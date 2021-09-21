@@ -19,7 +19,7 @@ The project is made using the MERN stack (MongoDB, Express.js, React.js, Node.js
 8. Reset table data
 
 ### TODO:
-In server directory, create a .env file and add your Mongodb url & port number (See sample.env for an example)
+In server directory, rename the sample.env file to .env and add your MongoDb URL
 
 ### To Run:
 - $ `cd server`
